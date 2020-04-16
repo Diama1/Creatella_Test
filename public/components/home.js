@@ -1,11 +1,14 @@
 import React, { Component, Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import getTimeInterval  from './layout/timeFormating';
-import { getAllProducts} from '../redux/actions/products.action';
+import {getAllProducts, sortProducts} from '../redux/actions/products.action';
+import { BASE_URL } from '../utils/constant';
+import Header from './layout/header';
+
+
 
 export class Products extends Component {
   state = {
-    sorting: 'asc',
     loading: false
   }
 
@@ -16,7 +19,7 @@ export class Products extends Component {
 
     render() {
       const { productReducer } = this.props;
-      const { loading, sorting } = this.state;
+      const { loading } = this.state;
       
       if (productReducer.loading) {
         return (
@@ -30,19 +33,22 @@ export class Products extends Component {
         }
         return (
         <div className="products">
+          <Header />
           <div className="container">
         <header>
           <h4>Our products</h4>
         </header>
+        <select class="custom-select custom-select-lg mb-3" onChange={this.props.sortProducts} >
+          <option selected>Sort by</option>
+          <option value="price">Price</option>
+          <option value="size">Size</option>
+          <option value="id">Id</option>
+        </select>
         <div className="row">
           {
-            productReducer.list.sort((a,b) => {
-              const isReversed = (sorting === 'asc') ? 1 : -1;
-              return isReversed * a.size - b.size;
-            })
-              .map( (product, index) => {
+            productReducer.list.map( (product, index) => {
               if(index > 0 && index % 20 === 0 || index === productReducer.list.length -1){  
-                var link = "http://localhost:3000/ads/?r=" + Math.floor(Math.random()*1000);
+                var link = `${BASE_URL}/ads/?r=` + Math.floor(Math.random()*1000);
                 return(
                   <div className="col-md-12 d-flex justify-content-center">
                     <img src={link} />
@@ -87,6 +93,6 @@ const mapStateToProps = ({ productReducer }) => ({
 });
 export default connect(
   mapStateToProps,
-  { getAllProducts },
+  { getAllProducts, sortProducts },
 )(Products);
 

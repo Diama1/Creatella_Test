@@ -62,9 +62,4 @@ const getTimeInterval = (date) => {
     return `${years} year${years > 1 ? 's' : ''} ago`;
   };
   
-  const interval = getTimeInterval(
-    'Thu Apr 01 2020 22:19:19 GMT+0200 (Central Africa Time)',
-  );
-  console.log('interval==>', interval);
-
   export default getTimeInterval;
