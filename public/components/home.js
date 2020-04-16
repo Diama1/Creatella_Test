@@ -1,9 +1,11 @@
 import React, { Component, Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
+import getTimeInterval  from './layout/timeFormating';
 import { getAllProducts} from '../redux/actions/products.action';
 
 export class Products extends Component {
   state = {
+    sorting: 'asc',
     loading: false
   }
 
@@ -14,9 +16,8 @@ export class Products extends Component {
 
     render() {
       const { productReducer } = this.props;
-      const { loading } = this.state;
+      const { loading, sorting } = this.state;
       
-
       if (productReducer.loading) {
         return (
           <div className="products">
@@ -26,17 +27,20 @@ export class Products extends Component {
           </div>
          
         );
-      }
-      
+        }
         return (
-            <div className="products">
-      <div className="container">
+        <div className="products">
+          <div className="container">
         <header>
           <h4>Our products</h4>
         </header>
         <div className="row">
           {
-            productReducer.list.map( (product, index) => {
+            productReducer.list.sort((a,b) => {
+              const isReversed = (sorting === 'asc') ? 1 : -1;
+              return isReversed * a.size - b.size;
+            })
+              .map( (product, index) => {
               if(index > 0 && index % 20 === 0 || index === productReducer.list.length -1){  
                 var link = "http://localhost:3000/ads/?r=" + Math.floor(Math.random()*1000);
                 return(
@@ -61,25 +65,19 @@ export class Products extends Component {
                       <div className="product-bottom text-center">
                         <h5>{product.size} pixels</h5>
                         <h6>${product.price}</h6>
-                        <h6>{product.date}</h6>
+                        <h6>{getTimeInterval(product.date)}</h6>
                       </div>
                     </div>
                   </div> 
                 </div>
 
                 )
-                  
-                
-                
-             
-             
-
-    })
-          }
+              })
+              }
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-        )
+      )
     }
 
 }
