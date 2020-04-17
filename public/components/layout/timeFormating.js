@@ -5,6 +5,7 @@ const getTimeInterval = (date) => {
     const currentYear = currentDate.getFullYear();
     const timeDiff = Math.abs(currentTime - new Date(date).getTime());
     const time = new Date(Math.abs(currentDate.getTime() - timeDiff)).getTime();
+    const timeString = new Date(time).toDateString();
   
     const MILLISECOND = 1000;
     const SECOND = 1 * MILLISECOND;
@@ -47,7 +48,7 @@ const getTimeInterval = (date) => {
       return `${days} day${days > 1 ? 's' : ''} ago`;
     }
     if (timeDiff >= WEEK && timeDiff < MONTH) {
-      return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+      return timeString;
     }
     if (timeDiff >= WEEK && timeDiff < MONTH) {
       return `${weeks} week${weeks > 1 ? 's' : ''} ago`;

@@ -21,7 +21,6 @@ export const getAllProducts = () => async (dispatch) => {
             type: GET_PRODUCTS_ERROR,
             payload: error.response
         })
-        console.log('ERROR ============---===', error)
     }
 }
 
@@ -39,9 +38,8 @@ try{
             type: SORTING_PASS,
             payload: res.data
         })
-        console.log("Sortedddd=====", res.data);
 } catch(err){
-    console.log('Errorrrr', err)
+    console.log('Error', err)
 }
 
 }

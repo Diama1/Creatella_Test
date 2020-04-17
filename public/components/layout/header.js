@@ -6,7 +6,7 @@ import logo from '../../assets/img/logo.png'
 export default class Header extends Component {
     render() {
         return (
-            <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                 <Link to="/">
                         <img
                         className="navbar-brand"

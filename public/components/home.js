@@ -60,7 +60,7 @@ export class Products extends Component {
                   <div className="card p-0">
                     <div className="card-body">
                       <div className=" product-top">
-                        <h1>{product.face}</h1>
+                        <h1 style={{fontSize: product.size}}> {product.face}</h1>
                         <div className="overlay">
                           <button type="button" className="btn btn-secondary" title="Quick-shop"><i className="fas fa-eye"></i></button>
                           <button type="button" className="btn btn-secondary" title="Add to Wishlist"><i className="fa fa-heart-o"></i></button>

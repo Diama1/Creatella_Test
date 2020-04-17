@@ -13,6 +13,14 @@
 	.navbar-nav .nav-item .active {
 		color:#0062cc !important;
 	}
+	.navbar-toggler{
+		color: #0062cc !important;
+		.navbar-toggler-icon {
+			color: #0062cc !important;
+		}
+
+	}
+	
 }
 .container {
 	width: 100%;
@@ -56,6 +64,7 @@
 	h5 {
 		font-size: 20px;
 		font-weight: bold;
+		color: #0062cc;
 	}
 	h6 {
 		font-size: 15px;
