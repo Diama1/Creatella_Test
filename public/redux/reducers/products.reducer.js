@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_ERROR, GET_PRODUCTS_PENDING } from '../actions/types/products.types';
+import { GET_PRODUCTS, GET_PRODUCTS_ERROR, GET_PRODUCTS_PENDING, SORTING_PENDING, SORTING_PASS } from '../actions/types/products.types';
 
 const initialState = {
     list: [],
@@ -24,6 +24,18 @@ const initialState = {
                 return {
                     ...state,
                     error: payload
+                }
+            case SORTING_PENDING:
+                return {
+                    ...state,
+                    ...payload,
+                    loading: true
+                }
+            case SORTING_PASS:
+                return {
+                    ...state,
+                    list: payload,
+                    loading: false
                 }
                 
         default:

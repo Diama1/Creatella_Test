@@ -1,6 +1,11 @@
 import React, { Component, Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getAllProducts} from '../redux/actions/products.action';
+import getTimeInterval  from './layout/timeFormating';
+import {getAllProducts, sortProducts} from '../redux/actions/products.action';
+import { BASE_URL } from '../utils/constant';
+import Header from './layout/header';
+
+
 
 export class Products extends Component {
   state = {
@@ -16,7 +21,6 @@ export class Products extends Component {
       const { productReducer } = this.props;
       const { loading } = this.state;
       
-
       if (productReducer.loading) {
         return (
           <div className="products">
@@ -26,19 +30,25 @@ export class Products extends Component {
           </div>
          
         );
-      }
-      
+        }
         return (
-            <div className="products">
-      <div className="container">
+        <div className="products">
+          <Header />
+          <div className="container">
         <header>
           <h4>Our products</h4>
         </header>
+        <select class="custom-select custom-select-lg mb-3" onChange={this.props.sortProducts} >
+          <option selected>Sort by</option>
+          <option value="price">Price</option>
+          <option value="size">Size</option>
+          <option value="id">Id</option>
+        </select>
         <div className="row">
           {
             productReducer.list.map( (product, index) => {
               if(index > 0 && index % 20 === 0 || index === productReducer.list.length -1){  
-                var link = "http://localhost:3000/ads/?r=" + Math.floor(Math.random()*1000);
+                var link = `${BASE_URL}/ads/?r=` + Math.floor(Math.random()*1000);
                 return(
                   <div className="col-md-12 d-flex justify-content-center">
                     <img src={link} />
@@ -50,7 +60,7 @@ export class Products extends Component {
                   <div className="card p-0">
                     <div className="card-body">
                       <div className=" product-top">
-                        <h1>{product.face}</h1>
+                        <h1 style={{fontSize: product.size}}> {product.face}</h1>
                         <div className="overlay">
                           <button type="button" className="btn btn-secondary" title="Quick-shop"><i className="fas fa-eye"></i></button>
                           <button type="button" className="btn btn-secondary" title="Add to Wishlist"><i className="fa fa-heart-o"></i></button>
@@ -61,25 +71,19 @@ export class Products extends Component {
                       <div className="product-bottom text-center">
                         <h5>{product.size} pixels</h5>
                         <h6>${product.price}</h6>
-                        <h6>{product.date}</h6>
+                        <h6>{getTimeInterval(product.date)}</h6>
                       </div>
                     </div>
                   </div> 
                 </div>
 
                 )
-                  
-                
-                
-             
-             
-
-    })
-          }
+              })
+              }
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-        )
+      )
     }
 
 }
@@ -89,6 +93,6 @@ const mapStateToProps = ({ productReducer }) => ({
 });
 export default connect(
   mapStateToProps,
-  { getAllProducts },
+  { getAllProducts, sortProducts },
 )(Products);
 
